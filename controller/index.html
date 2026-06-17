@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controller - Smart Pot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/theme-toggle.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script type="module" src="../assets/js/controller.js" defer></script>
+</head>
+<body class="light-mode">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="dashboard-page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle" onclick="toggleSidebarCollapse()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <img src="../assets/img/logo.png" alt="Smart Pot Logo" class="sidebar-logo">
+                <div class="sidebar-title">SMART POT</div>
+                <div class="sidebar-subtitle">IoT Monitoring dan Controller</div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-menu">
+                <a href="../dashboard/" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../controller/" class="menu-item active">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Controller</span>
+                </a>
+                <a href="../histori/" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histori</span>
+                </a>
+                <a href="../kelola-user/" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">User</div>
+                        <div class="user-email" id="userEmail">user@smartpot.com</div>
+                    </div>
+                </div>
+                <button id="signOutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <i class="fas fa-sliders-h"></i>
+                    <h1>Mode Kontrol</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i id="themeIcon" class="fas fa-sun"></i>
+                    </button>
+                    <div class="header-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Mode Kontrol Container -->
+                <div class="mode-kontrol-container">
+                    <div class="mode-kontrol-box">
+                        <h2 class="mode-title">MODE KONTROL</h2>
+                        
+                        <div class="mode-buttons">
+                            <button class="mode-btn mode-otomatis active" id="modeOtomatis">
+                                Otomatis
+                            </button>
+                            <button class="mode-btn mode-waktu" id="modeWaktu">
+                                Waktu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification hidden">
+        <i class="notification-icon"></i>
+        <span class="notification-message"></span>
+    </div>
+
+ 
+</body>
+</html>

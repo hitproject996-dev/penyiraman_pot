@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Otomatis - Smart Pot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/theme-toggle.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script type="module" src="../assets/js/mode-otomatis.js" defer></script>
+</head>
+<body class="light-mode">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="dashboard-page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle" onclick="toggleSidebarCollapse()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <img src="../assets/img/logo.png" alt="Smart Pot Logo" class="sidebar-logo">
+                <div class="sidebar-title">SMART POT</div>
+                <div class="sidebar-subtitle">IoT Monitoring dan Controller</div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-menu">
+                <a href="../dashboard/" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../controller/" class="menu-item active">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Controller</span>
+                </a>
+                <a href="../histori/" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histori</span>
+                </a>
+                <a href="../kelola-user/" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">User</div>
+                        <div class="user-email" id="userEmail">user@smartpot.com</div>
+                    </div>
+                </div>
+                <button id="signOutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <i class="fas fa-robot"></i>
+                    <h1>Mode Otomatis</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i id="themeIcon" class="fas fa-sun"></i>
+                    </button>
+                    <div class="header-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+            <!-- Back Button -->
+            <div class="back-nav">
+                <a href="../controller/" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Mode Kontrol
+                </a>
+            </div>
+
+            <!-- Page Header with Main Toggle -->
+            <div class="page-header-otomatis">
+                <div class="header-left">
+                    <i class="fas fa-robot"></i>
+                    <h1>Mode Otomatis</h1>
+                </div>
+                <div class="main-toggle-container" onclick="toggleMainMode()">
+                    <div class="main-toggle-switch" id="mainToggle">
+                        <div class="main-toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Container -->
+            <div class="otomatis-container">
+                <!-- Status Card -->
+                <div class="status-card">
+                    <div class="status-header">
+                        <i class="fas fa-info-circle"></i>
+                        <h3>Status Mode Otomatis</h3>
+                    </div>
+                    <div class="status-body">
+                        <div class="status-indicator" id="statusIndicator">
+                            <div class="indicator-dot"></div>
+                            <span id="statusText">Tidak Aktif</span>
+                        </div>
+                        <p class="status-description">Sistem akan otomatis menyiram tanaman ketika kelembaban tanah di bawah nilai minimum yang ditentukan</p>
+                    </div>
+                </div>
+
+                <!-- Threshold Profile Selector -->
+                <div class="threshold-profile-card">
+                    <div class="threshold-profile-top">
+                        <div class="threshold-profile-header">
+                            <i class="fas fa-layer-group"></i>
+                            <h3>Profil Threshold</h3>
+                        </div>
+                        <button type="button" id="btnAddThreshold" class="btn-add-threshold">
+                            <i class="fas fa-plus"></i> Tambah Threshold
+                        </button>
+                    </div>
+                    <!-- <p class="threshold-profile-subtitle">Kelola profil threshold seperti jadwal: bisa tambah, edit, pilih aktif, dan hapus.</p> -->
+                    <div id="thresholdProfileContainer" class="threshold-profile-list" style="margin-top: 10px;"></div>
+                    <div class="threshold-profile-active" id="activeThresholdLabel">Profil aktif: Threshold 1</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Threshold -->
+    <div id="thresholdModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="thresholdModalTitle"><i class="fas fa-layer-group"></i> Tambah Threshold</h3>
+                <button class="modal-close" onclick="closeThresholdModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editThresholdKey">
+
+                <div class="form-group">
+                    <label for="thresholdPlantName">Nama Tanaman</label>
+                    <input type="text" id="thresholdPlantName" class="form-input" placeholder="Contoh: Cabai Rawit" maxlength="60">
+                </div>
+
+                <div class="form-group threshold-range-grid">
+                    <div class="threshold-range-item">
+                        <label for="thresholdMinInput">Batas Bawah Kelembaban (%)</label>
+                        <input type="number" id="thresholdMinInput" class="form-input" min="0" max="99" value="30">
+                    </div>
+                    <div class="threshold-range-item">
+                        <label for="thresholdMaxInput">Batas Atas Kelembaban (%)</label>
+                        <input type="number" id="thresholdMaxInput" class="form-input" min="1" max="100" value="70">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Pot</label>
+                    <div class="pot-selection-inline">
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="threshold-pot-checkbox" value="pot1">
+                            <span>Pot 1</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="threshold-pot-checkbox" value="pot2">
+                            <span>Pot 2</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="threshold-pot-checkbox" value="pot3">
+                            <span>Pot 3</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="threshold-pot-checkbox" value="pot4">
+                            <span>Pot 4</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="threshold-pot-checkbox" value="pot5">
+                            <span>Pot 5</span>
+                        </label>
+                    </div>
+                    <div class="pot-actions">
+                        <button type="button" class="btn-select-all-modal" onclick="selectAllThresholdPotsModal()">Pilih Semua</button>
+                        <button type="button" class="btn-deselect-all-modal" onclick="deselectAllThresholdPotsModal()">Hapus Semua</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Penyiraman</label>
+                    <div class="pump-selection-modal">
+                        <label class="pump-radio-option">
+                            <input type="radio" name="thresholdPumpType" value="air" checked>
+                            <span class="pump-radio-label">
+                                <i class="fas fa-water"></i> Pompa Air
+                            </span>
+                        </label>
+                        <label class="pump-radio-option">
+                            <input type="radio" name="thresholdPumpType" value="nutrisi">
+                            <span class="pump-radio-label">
+                                <i class="fas fa-flask"></i> Pompa Nutrisi
+                            </span>
+                        </label>
+                        <label class="pump-radio-option">
+                            <input type="radio" name="thresholdPumpType" value="pengaduk">
+                            <span class="pump-radio-label">
+                                <i class="fas fa-blender"></i> Pengaduk
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeThresholdModal()">Batal</button>
+                <button class="btn-save" id="btnSaveThreshold" onclick="saveThresholdProfile()">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification hidden">
+        <i class="notification-icon"></i>
+        <span class="notification-message"></span>
+    </div>
+
+
+</body>
+</html>

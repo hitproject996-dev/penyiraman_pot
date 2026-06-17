@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Pot - Sidebar Demo</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Demo specific styles */
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .demo-card h2 {
+            color: #1f2937;
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .demo-card p {
+            color: #6b7280;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            color: #059669;
+            font-size: 18px;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-info strong {
+            color: #1e40af;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .alert-info p {
+            color: #1e3a8a;
+            margin: 0;
+        }
+    </style>
+    <script src="assets/js/sidebar.js"></script>
+</head>
+<body>
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Page -->
+    <div class="dashboard-page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle" onclick="toggleSidebarCollapse()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <img src="assets/img/logo.png" alt="Smart Pot Logo" class="sidebar-logo">
+                <div class="sidebar-title">SMART POT</div>
+                <div class="sidebar-subtitle">IoT Monitoring</div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-menu">
+                <a href="dashboard/" class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="controller/" class="menu-item">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Controller</span>
+                </a>
+                <a href="histori/" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histori</span>
+                </a>
+                <a href="kelola-user/" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">Administrator</div>
+                        <div class="user-email">admin@smartpot.com</div>
+                    </div>
+                </div>
+                <button id="signOutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <i class="fas fa-rocket"></i>
+                    <h1>Sidebar Layout Demo</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="header-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Welcome Alert -->
+                <div class="alert-info">
+                    <strong>🎉 Selamat! Dashboard Smart_Pot Telah Berhasil Di-Update!</strong>
+                    <p>Layout sidebar modern telah berhasil diterapkan. Coba klik tombol toggle di sidebar untuk collapse/expand, atau resize browser untuk melihat mode responsive.</p>
+                </div>
+
+                <!-- Demo Cards -->
+                <div class="demo-card">
+                    <h2><i class="fas fa-magic"></i> Fitur Utama Sidebar</h2>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Fixed Sidebar</strong> - Sidebar tetap di kiri dan tidak scroll bersama konten</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Collapsible</strong> - Klik tombol toggle untuk minimize/maximize sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Active Highlighting</strong> - Menu yang aktif memiliki highlight warna dan indicator bar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Responsive</strong> - Di mobile, sidebar jadi slide-in menu dengan overlay</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Smooth Animation</strong> - Semua transisi menggunakan smooth CSS animations</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>User Info</strong> - Info user dan tombol logout di bagian bawah sidebar</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="demo-card">
+                    <h2><i class="fas fa-palette"></i> Design Modern</h2>
+                    <p>
+                        Dashboard menggunakan design modern dengan:
+                    </p>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-paint-brush"></i>
+                            <span>Gradient hijau untuk sidebar sesuai branding Smart_Pot</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-image"></i>
+                            <span>Logo circular dengan background putih di bagian atas sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-square-full"></i>
+                            <span>Border radius dan shadow untuk efek depth</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-icons"></i>
+                            <span>Font Awesome icons untuk visual yang jelas</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Responsive layout untuk semua ukuran device</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="demo-card">
+                    <h2><i class="fas fa-keyboard"></i> Cara Menggunakan</h2>
+                    <p><strong>Desktop Mode:</strong></p>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-arrow-pointer"></i>
+                            <span>Klik menu di sidebar untuk navigasi antar halaman</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-compress"></i>
+                            <span>Klik tombol chevron (◄/►) untuk collapse/expand sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-mouse-pointer"></i>
+                            <span>Hover menu untuk melihat efek highlight</span>
+                        </li>
+                    </ul>
+                    
+                    <p style="margin-top: 20px;"><strong>Mobile Mode:</strong></p>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-bars"></i>
+                            <span>Tap tombol hamburger (☰) di header untuk buka sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-times-circle"></i>
+                            <span>Tap di luar sidebar (overlay) untuk tutup</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="demo-card">
+                    <h2><i class="fas fa-folder-open"></i> File yang Dimodifikasi</h2>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-file-code"></i>
+                            <span><strong>assets/css/style.css</strong> - Styling sidebar dan layout baru</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-code"></i>
+                            <span><strong>assets/js/sidebar.js</strong> - JavaScript untuk sidebar functionality</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-code"></i>
+                            <span><strong>dashboard/index.html</strong> - Halaman monitoring dengan sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-code"></i>
+                            <span><strong>controller/index.html</strong> - Halaman controller dengan sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-code"></i>
+                            <span><strong>histori/index.html</strong> - Halaman histori dengan sidebar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-code"></i>
+                            <span><strong>kelola-user/index.html</strong> - Halaman kelola user dengan sidebar</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="demo-card">
+                    <h2><i class="fas fa-info-circle"></i> Dokumentasi Lengkap</h2>
+                    <p>
+                        Untuk dokumentasi lengkap mengenai sidebar layout, silakan baca file:
+                    </p>
+                    <p style="background: #f3f4f6; padding: 15px; border-radius: 8px; font-family: monospace; margin-top: 10px;">
+                        📄 <strong>SIDEBAR_LAYOUT_GUIDE.md</strong>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        File tersebut berisi penjelasan detail tentang:
+                    </p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> <span>Fitur-fitur sidebar</span></li>
+                        <li><i class="fas fa-check"></i> <span>Design elements dan color scheme</span></li>
+                        <li><i class="fas fa-check"></i> <span>Cara customization</span></li>
+                        <li><i class="fas fa-check"></i> <span>Responsive breakpoints</span></li>
+                        <li><i class="fas fa-check"></i> <span>Tips dan best practices</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

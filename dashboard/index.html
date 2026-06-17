@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Pot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/theme-toggle.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script type="module" src="../assets/js/app.js" defer></script>
+</head>
+<body class="light-mode">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="dashboard-page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle" onclick="toggleSidebarCollapse()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <img src="../assets/img/logo.png" alt="Smart Pot Logo" class="sidebar-logo">
+                <div class="sidebar-title">SMART POT</div>
+                <div class="sidebar-subtitle">IoT Monitoring dan Controller</div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-menu">
+                <a href="../dashboard/" class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../controller/" class="menu-item">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Controller</span>
+                </a>
+                <a href="../histori/" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histori</span>
+                </a>
+                <a href="../kelola-user/" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">User</div>
+                        <div class="user-email" id="userEmail">user@smartpot.com</div>
+                    </div>
+                </div>
+                <button id="signOutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <i class="fas fa-chart-line"></i>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i id="themeIcon" class="fas fa-sun"></i>
+                    </button>
+                    <div class="header-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1><i class="fas fa-tachometer-alt"></i> Status Monitoring dan Kontrol Manual</h1>
+                    <p>Pemantauan sensor dan status sistem Smart Pot secara real-time</p>
+                </div>
+
+                <div class="waterflow-row">
+                    <div class="waterflow-badge" id="waterflowBadge">
+                        <span class="waterflow-dot" id="waterflowDot"></span>
+                        <span class="waterflow-text" id="waterflowText">AIR TERSEDIA</span>
+                    </div>
+                </div>
+
+                <!-- Sensor Cards -->
+                <div class="sensor-cards">
+                    <div class="sensor-card sensor-temp">
+                        <div class="sensor-value">
+                            <span class="value" id="dhtTemp">15</span>
+                            <span class="unit">°C</span>
+                        </div>
+                        <div class="sensor-label">SUHU DHT</div>
+                        <div class="sensor-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                    </div>
+
+                    <div class="sensor-card sensor-humidity">
+                        <div class="sensor-value">
+                            <span class="value" id="dhtHumidity">65</span>
+                            <span class="unit">%</span>
+                        </div>
+                        <div class="sensor-label">KELEMBAPAN UDARA</div>
+                        <div class="sensor-icon">
+                            <i class="fas fa-droplet"></i>
+                        </div>
+                    </div>
+
+                    <div class="sensor-card sensor-light">
+                        <div class="sensor-value">
+                            <span class="value" id="sunLight">25</span>
+                            <span class="status">Panas</span>
+                        </div>
+                        <div class="sensor-label">CAHAYA MATAHARI</div>
+                        <div class="sensor-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Pots -->
+                <div class="pots-container">
+                    <div class="pot pot-1">
+                        <div class="pot-header">POT 1</div>
+                        <div class="pot-content">
+                            <div class="pot-moisture-label">Soil Moisture</div>
+                            <div class="pot-value" id="moisture1">4</div>
+                            <div class="pot-toggle" data-pot="1" onclick="togglePot(1)">
+                                <span class="toggle-status" id="status1">ON</span>
+                                <div class="toggle-indicator" id="indicator1"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pot pot-2">
+                        <div class="pot-header">POT 2</div>
+                        <div class="pot-content">
+                            <div class="pot-moisture-label">Soil Moisture</div>
+                            <div class="pot-value" id="moisture2">2</div>
+                            <div class="pot-toggle" data-pot="2" onclick="togglePot(2)">
+                                <span class="toggle-status" id="status2">ON</span>
+                                <div class="toggle-indicator" id="indicator2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pot pot-3">
+                        <div class="pot-header">POT 3</div>
+                        <div class="pot-content">
+                            <div class="pot-moisture-label">Soil Moisture</div>
+                            <div class="pot-value" id="moisture3">6</div>
+                            <div class="pot-toggle" data-pot="3" onclick="togglePot(3)">
+                                <span class="toggle-status" id="status3">ON</span>
+                                <div class="toggle-indicator" id="indicator3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pot pot-4">
+                        <div class="pot-header">POT 4</div>
+                        <div class="pot-content">
+                            <div class="pot-moisture-label">Soil Moisture</div>
+                            <div class="pot-value" id="moisture4">8</div>
+                            <div class="pot-toggle" data-pot="4" onclick="togglePot(4)">
+                                <span class="toggle-status" id="status4">ON</span>
+                                <div class="toggle-indicator" id="indicator4"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pot pot-5">
+                        <div class="pot-header">POT 5</div>
+                        <div class="pot-content">
+                            <div class="pot-moisture-label">Soil Moisture</div>
+                            <div class="pot-value" id="moisture5">10</div>
+                            <div class="pot-toggle" data-pot="5" onclick="togglePot(5)">
+                                <span class="toggle-status" id="status5">ON</span>
+                                <div class="toggle-indicator" id="indicator5"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actuator Controls -->
+                <div class="actuator-controls">
+                    <div class="actuator-card actuator-water">
+                        <div class="actuator-header">
+                            <i class="fas fa-tint"></i> PENYIRAMAN AIR
+                        </div>
+                        <div class="actuator-content">
+                            <div class="actuator-toggle" onclick="toggleWater()">
+                                <span class="toggle-status" id="waterStatus">ON</span>
+                                <div class="toggle-indicator active" id="waterIndicator"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actuator-card actuator-fertilizer">
+                        <div class="actuator-header">
+                            <i class="fas fa-seedling"></i> PENYIRAMAN PUPUK
+                        </div>
+                        <div class="actuator-content">
+                            <div class="actuator-toggle" onclick="toggleFertilizer()">
+                                <span class="toggle-status" id="fertilizerStatus">ON</span>
+                                <div class="toggle-indicator active" id="fertilizerIndicator"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actuator-card actuator-mixer">
+                        <div class="actuator-header">
+                            <i class="fas fa-blender"></i> PENGADUK LARUTAN NUTRISI
+                        </div>
+                        <div class="actuator-content">
+                            <div class="actuator-toggle" onclick="toggleMixer()">
+                                <span class="toggle-status" id="mixerStatus">ON</span>
+                                <div class="toggle-indicator active" id="mixerIndicator"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

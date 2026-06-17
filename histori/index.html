@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histori - Smart Pot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/theme-toggle.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script type="module" src="../assets/js/histori.js" defer></script>
+</head>
+<body class="light-mode">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="dashboard-page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle" onclick="toggleSidebarCollapse()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <img src="../assets/img/logo.png" alt="Smart Pot Logo" class="sidebar-logo">
+                <div class="sidebar-title">SMART POT</div>
+                <div class="sidebar-subtitle">IoT Monitoring dan Controller</div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-menu">
+                <a href="../dashboard/" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../controller/" class="menu-item">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Controller</span>
+                </a>
+                <a href="../histori/" class="menu-item active">
+                    <i class="fas fa-history"></i>
+                    <span>Histori</span>
+                </a>
+                <a href="../kelola-user/" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">User</div>
+                        <div class="user-email" id="userEmail">user@smartpot.com</div>
+                    </div>
+                </div>
+                <button id="signOutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <i class="fas fa-history"></i>
+                    <h1>Histori Monitoring</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i id="themeIcon" class="fas fa-sun"></i>
+                    </button>
+                    <div class="header-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1><i class="fas fa-database"></i> Riwayat Data</h1>
+                    <p>Riwayat data sensor dan aktivitas penyiraman</p>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label>Pot:</label>
+                        <select id="potFilter" class="filter-input">
+                            <option value="all">Semua Pot</option>
+                            <option value="1">Pot 1</option>
+                            <option value="2">Pot 2</option>
+                            <option value="3">Pot 3</option>
+                            <option value="4">Pot 4</option>
+                            <option value="5">Pot 5</option>
+                        </select>
+                    </div>
+                    <button class="btn-filter" id="applyFilter">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+
+                <!-- History Table -->
+                <div class="history-table-container">
+                    <div class="table-header-controls">
+                        <div class="entries-control">
+                            <select id="entriesPerPage" class="entries-select">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20" selected>20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span>entries per page</span>
+                        </div>
+                        <div class="search-control">
+                            <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                        </div>
+                    </div>
+                    
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal & Waktu</th>
+                                <th>Pot</th>
+                                <th>Suhu (°C)</th>
+                                <th>Cahaya (%)</th>
+                                <th>Kelembaban (%)</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Data will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <!-- Pagination Controls -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="paginationInfo">Showing 1 to 20 of 100 entries</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-pagination" id="prevPage">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="page-numbers" id="pageNumbers">
+                                <!-- Page numbers will be inserted here -->
+                            </div>
+                            <button class="btn-pagination" id="nextPage">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification hidden">
+        <i class="notification-icon"></i>
+        <span class="notification-message"></span>
+    </div>
+
+
+</body>
+</html>

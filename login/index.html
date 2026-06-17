@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Pot IoT Monitoring</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="../assets/js/login.js" defer></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg-gradient"></div>
+    
+    <!-- Falling Leaves Container -->
+    <div class="leaves-animation" id="leavesContainer"></div>
+
+    <!-- Login Page -->
+    <div class="login-page">
+        <div class="login-container glassmor  phism-card">
+            <div class="login-header">
+                <img src="../assets/img/logo.png" alt="Smart Pot Logo" class="login-logo">
+                <h1>SMART POT</h1>
+                <p><i class="fas fa-seedling"></i> IoT Plant Monitoring System</p>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="emailInput" placeholder="Email" class="input-field">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="passwordInput" placeholder="Password" class="input-field">
+                </div>
+                <button id="signInBtn" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Falling Leaves Animation Script -->
+    <script>
+        // Create falling leaf animation
+        function createLeaf() {
+            const container = document.getElementById('leavesContainer');
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf');
+            
+            // Random horizontal position
+            leaf.style.left = Math.random() * 100 + '%';
+            
+            // Random animation delay
+            leaf.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Random animation duration (falling speed)
+            leaf.style.animationDuration = (Math.random() * 8 + 12) + 's';
+            
+            // Random leaf icon/emoji
+            const leafIcons = ['🍃', '🌿', '🍀', '🌱'];
+            leaf.innerHTML = leafIcons[Math.floor(Math.random() * leafIcons.length)];
+            
+            container.appendChild(leaf);
+            
+            // Remove leaf after animation completes
+            setTimeout(() => {
+                leaf.remove();
+            }, 20000);
+        }
+
+        // Generate leaves periodically
+        setInterval(createLeaf, 800);
+        
+        // Create initial batch of leaves
+        for(let i = 0; i < 10; i++) {
+            setTimeout(createLeaf, i * 500);
+        }
+    </script>
+</body>
+</html>

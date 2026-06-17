@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Waktu - Smart Pot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/theme-toggle.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script type="module" src="../assets/js/mode-waktu.js" defer></script>
+</head>
+<body class="light-mode">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="dashboard-page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle" onclick="toggleSidebarCollapse()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <img src="../assets/img/logo.png" alt="Smart Pot Logo" class="sidebar-logo">
+                <div class="sidebar-title">SMART POT</div>
+                <div class="sidebar-subtitle">IoT Monitoring dan Controller</div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-menu">
+                <a href="../dashboard/" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../controller/" class="menu-item active">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Controller</span>
+                </a>
+                <a href="../histori/" class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histori</span>
+                </a>
+                <a href="../kelola-user/" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">User</div>
+                        <div class="user-email" id="userEmail">user@smartpot.com</div>
+                    </div>
+                </div>
+                <button id="signOutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <i class="fas fa-clock"></i>
+                    <h1>Mode Pengatur Waktu</h1>
+                </div>
+                <div class="header-actions">                    
+                    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i id="themeIcon" class="fas fa-sun"></i>
+                    </button>                    
+                    <div class="header-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+            <!-- Back Button -->
+            <div class="back-nav">
+                <a href="../controller/" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Mode Kontrol
+                </a>
+            </div>
+
+            <!-- Page Header with Main Toggle -->
+            <div class="page-header-otomatis">
+                <div class="header-left">
+                    <i class="fas fa-clock"></i>
+                    <h1>Mode Pengatur Waktu</h1>
+                </div>
+                <div class="main-toggle-container" onclick="toggleMainMode()">
+                    <div class="main-toggle-switch" id="mainToggle">
+                        <div class="main-toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Container -->
+            <div class="otomatis-container">
+                <!-- Status Card -->
+                <div class="status-card">
+                    <div class="status-header">
+                        <i class="fas fa-info-circle"></i>
+                        <h3>Status Mode Waktu</h3>
+                    </div>
+                    <div class="status-body">
+                        <div class="status-indicator" id="statusIndicator">
+                            <div class="indicator-dot"></div>
+                            <span id="statusText">Tidak Aktif</span>
+                        </div>
+                        <p class="status-description">Sistem akan menyiram pot sesuai jadwal waktu yang telah ditentukan</p>
+                    </div>
+                </div>
+
+                <!-- Schedule List Card -->
+                <div class="schedule-list-card">
+                    <div class="schedule-list-header">
+                        <div class="header-left">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Jadwal Penyiraman</h3>
+                        </div>
+                        <button class="btn-add-schedule" id="btnAddSchedule" disabled>
+                            <i class="fas fa-plus"></i> Tambah Jadwal
+                        </button>
+                    </div>
+                    <div id="scheduleContainer" class="schedule-container">
+                        <!-- Schedules will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Schedule -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-calendar-plus"></i> Tambah Jadwal</h3>
+                <button class="modal-close" onclick="closeScheduleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editScheduleId">
+                
+                <div class="form-group">
+                    <label>Nama Jadwal</label>
+                    <input type="text" id="scheduleName" class="form-input" placeholder="Contoh: Penyiraman Pagi">
+                </div>
+
+                <div class="form-group">
+                    <label>Waktu Mulai</label>
+                    <input type="time" id="scheduleTime" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Durasi (Detik)</label>
+                    <input type="number" id="scheduleDuration" class="form-input" min="1" max="300" value="30">
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Pot</label>
+                    <div class="pot-selection-inline">
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="schedule-pot-checkbox" value="pot1">
+                            <span>Pot 1</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="schedule-pot-checkbox" value="pot2">
+                            <span>Pot 2</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="schedule-pot-checkbox" value="pot3">
+                            <span>Pot 3</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="schedule-pot-checkbox" value="pot4">
+                            <span>Pot 4</span>
+                        </label>
+                        <label class="pot-checkbox-inline">
+                            <input type="checkbox" class="schedule-pot-checkbox" value="pot5">
+                            <span>Pot 5</span>
+                        </label>
+                    </div>
+                    <div class="pot-actions">
+                        <button type="button" class="btn-select-all-modal" onclick="selectAllPotsModal()">Pilih Semua</button>
+                        <button type="button" class="btn-deselect-all-modal" onclick="deselectAllPotsModal()">Hapus Semua</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Penyiraman</label>
+                    <div class="pump-selection-modal">
+                        <label class="pump-radio-option">
+                            <input type="radio" name="pumpType" value="air" checked>
+                            <span class="pump-radio-label">
+                                <i class="fas fa-water"></i> Pompa Air
+                            </span>
+                        </label>
+                        <label class="pump-radio-option">
+                            <input type="radio" name="pumpType" value="nutrisi">
+                            <span class="pump-radio-label">
+                                <i class="fas fa-flask"></i> Pompa Nutrisi
+                            </span>
+                        </label>
+                        <label class="pump-radio-option">
+                            <input type="radio" name="pumpType" value="pengaduk">
+                            <span class="pump-radio-label">
+                                <i class="fas fa-blender"></i> Pengaduk
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeScheduleModal()">Batal</button>
+                <button class="btn-save" onclick="saveSchedule()">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification hidden">
+        <i class="notification-icon"></i>
+        <span class="notification-message"></span>
+    </div>
+
+    <!-- Login Redirect Message -->
+
+</body>
+</html>
